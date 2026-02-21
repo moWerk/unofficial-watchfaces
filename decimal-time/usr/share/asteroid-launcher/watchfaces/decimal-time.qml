@@ -32,7 +32,7 @@ Item {
 
     // these are derived constants
     readonly property int metricSecondsPerStandardDay: metricHoursPerStandardDay * metricMinutesPerMetricHour * metricSecondsPerMetricMinute
-    readonly property double metricSecondsScaleFactor: metricSecondsPerStandardDay / 86400
+    readonly property double metricSecondsScaleFactor: metricSecondsPerStandardDay / 86400.0
 
     function getMetricMilliseconds(t) {
         return (t.getHours() * 3600000
@@ -44,6 +44,69 @@ Item {
     function getMetricHours(metricMilli){
         return getMetricMilliseconds(wallClock.time) / metricMinutesPerMetricHour / metricSecondsPerMetricMinute / 1000
     }
+
+    // ────────────────────────────────────────────────────────────────
+    // NEW: Decimal-second-precise update logic (Approach 2)
+    // ────────────────────────────────────────────────────────────────
+
+    // We want the displayed decimal time (especially seconds part) to change
+    // EXACTLY when a new decimal second begins, i.e. when the fractional
+    // part of the decimal seconds crosses an integer boundary.
+
+    property int lastShownDecimalSeconds: -1   // track last displayed integer decimal seconds to detect changes
+
+    Timer {
+        id: boundaryTimer
+        repeat: false
+        running: false
+
+        onTriggered: {
+            updateDecimalDisplay()
+            scheduleToNextDecimalSecond()
+        }
+    }
+
+    function scheduleToNextDecimalSecond() {
+        var now = wallClock.time
+        var metricMs = getMetricMilliseconds(now)
+
+        // metricMs is total decimal milliseconds since midnight
+        // One decimal second = 1000 decimal milliseconds
+        var msIntoCurrentDecSec = metricMs % 1000
+
+        var msToNextBoundary = 1000 - msIntoCurrentDecSec
+
+        // Small safety margin: if we're < ~8–10 ms away, just fire soon
+        // to avoid Qt timer jitter / zero/negative intervals
+        if (msToNextBoundary < 10) {
+            msToNextBoundary = 0
+        }
+
+        boundaryTimer.interval = msToNextBoundary
+        boundaryTimer.start()
+    }
+
+    function updateDecimalDisplay() {
+        var metricMs = getMetricMilliseconds(wallClock.time)
+        var totalDecSeconds = Math.floor(metricMs / 1000)   // integer decimal seconds since midnight
+
+        if (totalDecSeconds === lastShownDecimalSeconds) {
+            // shouldn't happen, but guard against double-fires
+            scheduleToNextDecimalSecond()
+            return
+        }
+
+        lastShownDecimalSeconds = totalDecSeconds
+
+        // Optional: you could split into h / m / s here if you want to show
+        // full HH:MM:SS decimal format later — for now we keep your original
+        // decimalHours logic but it will now update at exact boundaries
+        decimalHours.text = getMetricHours(metricMs).toPrecision(5)
+    }
+
+    // ────────────────────────────────────────────────────────────────
+    // Original components below (unchanged except decimalHours binding removed)
+    // ────────────────────────────────────────────────────────────────
 
     component Tick: Rectangle {
         id: thisTick
@@ -173,7 +236,24 @@ Item {
         font.pixelSize: parent.width*0.15
         anchors.verticalCenterOffset: parent.width*0.016
         textFormat: Text.RichText
-        text: getMetricHours(wallClock.time).toPrecision(5)
+        // Was bound directly → now updated only on precise decimal-second boundaries
+        // text: getMetricHours(wallClock.time).toPrecision(5)
     }
 
+    // ────────────────────────────────────────────────────────────────
+    // Kick off the precise timer chain once everything is ready
+    // ────────────────────────────────────────────────────────────────
+
+    Component.onCompleted: {
+        // Show initial value immediately (using whatever time is current)
+        updateDecimalDisplay()
+        // Then align to the next real boundary and keep updating precisely
+        scheduleToNextDecimalSecond()
+    }
+
+    // Optional: re-schedule on time zone / settings change if needed
+    Connections {
+        target: wallClock
+        function onTimeChanged() { /* could call scheduleToNext...() if jump detected */ }
+    }
 }
