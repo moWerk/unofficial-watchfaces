@@ -1,0 +1,70 @@
+// SPDX-FileCopyrightText: 2021 John Gibbon <jngibbon@gmail.com>
+// SPDX-License-Identifier: LGPL-2.1-or-later
+// Entry point for the arc watchface: it loads one of the bundled arc designs
+// from a stored index and exposes a settings page that steps to the next
+// design on tap, so all of the author's styles live under a single store face.
+import Nemo.Configuration
+import QtQuick
+import org.asteroid.controls
+
+Item {
+    id: root
+
+    // The base Arc.qml renders the white standard-seconds design, so it is the
+    // first entry and the remaining seven files are its variant overrides.
+    readonly property var designs: ["Arc.qml", "Arc-white-standard-noseconds.qml", "Arc-white-pie-seconds.qml", "Arc-white-pie-noseconds.qml", "Arc-black-standard-seconds.qml", "Arc-black-standard-noseconds.qml", "Arc-black-pie-seconds.qml", "Arc-black-pie-noseconds.qml"]
+    property Component settingsPage: arcSettingsPage
+
+    anchors.fill: parent
+
+    ConfigurationValue {
+        id: arcDesign
+
+        key: "/org/asteroidos/watchfaces/arc/design"
+        defaultValue: 0
+    }
+
+    Loader {
+        anchors.fill: parent
+        source: root.designs[arcDesign.value % root.designs.length]
+    }
+
+    Component {
+        id: arcSettingsPage
+
+        Item {
+            id: settings
+
+            anchors.fill: parent
+
+            Loader {
+                id: designPreview
+
+                width: Math.min(parent.width, parent.height) * 0.72
+                height: width
+                anchors.centerIn: parent
+                source: root.designs[arcDesign.value % root.designs.length]
+            }
+
+            Label {
+                horizontalAlignment: Text.AlignHCenter
+                text: "Tap to change the arc style"
+
+                anchors {
+                    bottom: parent.bottom
+                    bottomMargin: parent.height * 0.1
+                    horizontalCenter: parent.horizontalCenter
+                }
+
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: arcDesign.value = (arcDesign.value + 1) % root.designs.length
+            }
+
+        }
+
+    }
+
+}
