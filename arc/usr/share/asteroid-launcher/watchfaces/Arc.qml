@@ -16,9 +16,8 @@
  * This watchface has arcs for hands and a battery indicator
  */
 
-import Nemo.Mce 1.0
-import QtQuick 2.1
-import org.asteroid.utils 1.0
+import Nemo.Mce
+import QtQuick
 
 Item {
     // /'api'
