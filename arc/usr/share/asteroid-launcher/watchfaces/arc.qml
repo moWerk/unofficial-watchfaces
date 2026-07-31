@@ -10,9 +10,10 @@ import org.asteroid.controls
 Item {
     id: root
 
-    // The base Arc.qml renders the white standard-seconds design, so it is the
-    // first entry and the remaining seven files are its variant overrides.
-    readonly property var designs: ["Arc.qml", "Arc-white-standard-noseconds.qml", "Arc-white-pie-seconds.qml", "Arc-white-pie-noseconds.qml", "Arc-black-standard-seconds.qml", "Arc-black-standard-noseconds.qml", "Arc-black-pie-seconds.qml", "Arc-black-pie-noseconds.qml"]
+    // The design files live in the arc/ subfolder so only this frontend lists as
+    // a face. The base arc/Arc.qml renders white standard-seconds and is the
+    // first entry; the other seven are its variant overrides.
+    readonly property var designs: ["arc/Arc.qml", "arc/Arc-white-standard-noseconds.qml", "arc/Arc-white-pie-seconds.qml", "arc/Arc-white-pie-noseconds.qml", "arc/Arc-black-standard-seconds.qml", "arc/Arc-black-standard-noseconds.qml", "arc/Arc-black-pie-seconds.qml", "arc/Arc-black-pie-noseconds.qml"]
     property Component settingsPage: arcSettingsPage
 
     anchors.fill: parent
