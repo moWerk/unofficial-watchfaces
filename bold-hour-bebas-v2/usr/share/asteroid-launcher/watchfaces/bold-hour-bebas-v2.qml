@@ -65,19 +65,22 @@ Item {
     Text {
         id: hourDisplay
 
-        property real offset: height * 0.42
-
         renderType: Text.NativeRendering
         color: Qt.rgba(1, 1, 1, 0.85)
         style: Text.Outline
         styleColor: Qt.rgba(0, 0, 0, 0.4)
         horizontalAlignment: Text.AlignHCenter
-        x: root.maxSize / 2 - width / 1.88
-        y: root.maxSize / 2 - offset
         text: use12H.value ? wallClock.time.toLocaleString(Qt.locale(), "hh ap").slice(0, 2) : wallClock.time.toLocaleString(Qt.locale(), "HH")
 
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            horizontalCenterOffset: -root.maxSize * 0.014
+            verticalCenter: parent.verticalCenter
+            verticalCenterOffset: -root.maxSize * 0.022
+        }
+
         font {
-            pixelSize: root.maxSize * 0.94
+            pixelSize: root.maxSize * 1
             family: "Bebas Neue"
             styleName: "Bold"
         }
