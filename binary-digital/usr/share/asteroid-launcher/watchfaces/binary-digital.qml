@@ -132,7 +132,7 @@ Item {
 
             anchors {
                 centerIn: parent
-                verticalCenterOffset: parent.height * 0.12
+                verticalCenterOffset: parent.height * 0.03
                 horizontalCenterOffset: -parent.height * 0.235 + hoffset
             }
 
@@ -152,7 +152,7 @@ Item {
 
             anchors {
                 centerIn: parent
-                verticalCenterOffset: parent.height * 0.12
+                verticalCenterOffset: parent.height * 0.03
                 horizontalCenterOffset: parent.height * 0.235 + hoffset
             }
 
