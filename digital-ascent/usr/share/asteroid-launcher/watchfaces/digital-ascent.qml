@@ -52,7 +52,7 @@ Item {
 
             anchors {
                 top: parent.top
-                topMargin: parent.height * 0.196
+                topMargin: parent.height * 0.05
                 right: parent.right
                 rightMargin: parent.width * 0.2
             }
@@ -74,6 +74,7 @@ Item {
 
             anchors {
                 top: hhText.bottom
+                topMargin: parent.height * -0.2
                 right: hhText.right
                 rightMargin: parent.width * 0.0026
             }
@@ -94,7 +95,7 @@ Item {
 
             anchors {
                 top: hhText.bottom
-                topMargin: -parent.height * 0.056
+                topMargin: -parent.height * 0.2
                 right: hhText.right
                 rightMargin: parent.width * 0.008
             }
