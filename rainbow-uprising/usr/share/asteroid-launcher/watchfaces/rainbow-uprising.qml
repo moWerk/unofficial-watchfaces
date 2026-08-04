@@ -69,14 +69,6 @@ Item {
         color: Qt.rgba(0.51, 0, 0.427, 0.2)
     }
 
-    Rectangle {
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-        color: Qt.rgba(0, 0, 0, 0.7)
-        width: parent.width
-        height: parent.height * 0.24
-    }
-
     Canvas {
         id: hourBar
 
@@ -131,6 +123,14 @@ Item {
         }
     }
 
+    Rectangle {
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        color: Qt.rgba(0, 0, 0, 0.7)
+        width: parent.width
+        height: parent.height * 0.24
+    }
+
     Text {
         id: hourDisplay
 
@@ -138,7 +138,7 @@ Item {
         color: Qt.rgba(1, 1, 1, 1)
         horizontalAlignment: Text.AlignHCenter
         anchors.top: parent.top
-        anchors.topMargin: root.maxSize * 0.395
+        anchors.topMargin: root.maxSize * 0.308
         x: parent.width / 6 - width / 2
         text: use12H.value ? wallClock.time.toLocaleString(Qt.locale(), "hh ap").slice(0, 2) : wallClock.time.toLocaleString(Qt.locale(), "HH")
 
@@ -157,7 +157,7 @@ Item {
         color: Qt.rgba(1, 1, 1, 1)
         horizontalAlignment: Text.AlignHCenter
         anchors.top: parent.top
-        anchors.topMargin: root.maxSize * 0.395
+        anchors.topMargin: root.maxSize * 0.32
         anchors.horizontalCenter: parent.horizontalCenter
         text: wallClock.time.toLocaleString(Qt.locale(), "mm")
 
@@ -176,7 +176,7 @@ Item {
         color: Qt.rgba(1, 1, 1, 1)
         horizontalAlignment: Text.AlignHCenter
         anchors.top: parent.top
-        anchors.topMargin: root.maxSize * 0.395
+        anchors.topMargin: root.maxSize * 0.318
         x: parent.width / 6 * 5 - width / 2
         text: wallClock.time.toLocaleString(Qt.locale(), "ss")
 
