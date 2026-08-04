@@ -117,7 +117,7 @@ Item {
                 onPaint: {
                     var ctx = getContext("2d");
                     prepareContext(ctx);
-                    ctx.font = "70 " + height * 0.36 + "px Cantarell";
+                    ctx.font = "bold " + height * 0.36 + "px Cantarell";
                     ctx.fillText(twoDigits(hour), width * 0.378, height * 0.537);
                 }
             }
@@ -134,7 +134,7 @@ Item {
                 onPaint: {
                     var ctx = getContext("2d");
                     prepareContext(ctx);
-                    ctx.font = "50 " + height * 0.18 + "px Cantarell";
+                    ctx.font = "500 " + height * 0.18 + "px Cantarell";
                     ctx.fillText(twoDigits(minute), width * 0.717, height * 0.473);
                 }
             }
@@ -151,7 +151,7 @@ Item {
                 onPaint: {
                     var ctx = getContext("2d");
                     prepareContext(ctx);
-                    ctx.font = "35 " + height / 15 + "px Cantarell";
+                    ctx.font = "400 " + height / 15 + "px Cantarell";
                     ctx.fillText(ap, width * 0.894, height * 0.371);
                 }
             }
@@ -167,7 +167,7 @@ Item {
                 onPaint: {
                     var ctx = getContext("2d");
                     prepareContext(ctx);
-                    ctx.font = "35 " + height / 10 + "px Cantarell";
+                    ctx.font = "400 " + height / 10 + "px Cantarell";
                     ctx.fillText(dow, width / 2, height * 60 / 480);
                 }
             }
@@ -184,7 +184,7 @@ Item {
                 onPaint: {
                     var ctx = getContext("2d");
                     prepareContext(ctx);
-                    ctx.font = "35 " + height / 10 + "px Cantarell";
+                    ctx.font = "400 " + height / 10 + "px Cantarell";
                     ctx.fillText(dateText, width / 2, height * 130 / 480);
                 }
             }
@@ -214,7 +214,7 @@ Item {
                     onPaint: {
                         var ctx = getContext("2d");
                         prepareContext(ctx);
-                        ctx.font = "25 " + height / 13 + "px Cantarell";
+                        ctx.font = "300 " + height / 13 + "px Cantarell";
                         //                    ctx.fillText(wallClock.time.toLocaleString(Qt.locale(), "d MMM"), width * .719, height * .595);
                         ctx.fillText(hrmBpm, width * 0.75, height * 370 / 480);
                     }
@@ -297,7 +297,7 @@ Item {
                     onPaint: {
                         var ctx = getContext("2d");
                         prepareContext(ctx);
-                        ctx.font = "25 " + height / 13 + "px Cantarell";
+                        ctx.font = "300 " + height / 13 + "px Cantarell";
                         //                    ctx.fillText(wallClock.time.toLocaleString(Qt.locale(), "d MMM"), width * .719, height * .595);
                         ctx.fillText(weatherBox.weatherSynced ? kelvinToTemperatureString(maxTemp.value) : '', width * 0.4, height * 370 / 480);
                     }
@@ -350,7 +350,7 @@ Item {
                     onPaint: {
                         var ctx = getContext("2d");
                         prepareContext(ctx);
-                        ctx.font = "25 " + height / 13 + "px Cantarell";
+                        ctx.font = "300 " + height / 13 + "px Cantarell";
                         //                    ctx.fillText(wallClock.time.toLocaleString(Qt.locale(), "d MMM"), width * .719, height * .595);
                         ctx.fillText(root.steps, width * 0.55, height * 430 / 480);
                     }
